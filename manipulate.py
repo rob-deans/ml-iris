@@ -12,7 +12,7 @@ dataLow = 0.001
 
 # What we want to normalise it to
 normaliseHigh = 1
-normaliseLow = 0
+normaliseLow = -1
 
 # Get the ranges
 dataRange = dataHigh - dataLow
@@ -50,4 +50,4 @@ df['virginica'] = df['class'].map({'Iris-setosa': 0, 'Iris-versicolor': 0, 'Iris
 df = df.drop('class', axis=1)
 
 # Save the dataframe to a file
-df.to_csv('norm_iris.csv', sep=',')
+df.to_csv('norm_iris.csv', sep=',', index=False)
