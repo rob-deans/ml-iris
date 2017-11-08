@@ -2,6 +2,7 @@
 import pandas as pd
 import tensorflow as tf
 import numpy as np
+from timeit import default_timer as timer
 
 # Config options for the y etc
 TRAIN_SIZE = 0.6
@@ -52,7 +53,10 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 # Init all the tf variables etc
 init = tf.global_variables_initializer()
 
-sess = tf.Session()
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+
+sess = tf.Session(config=config)
 sess.run(init)
 
 # Train the data:
@@ -60,11 +64,17 @@ sess.run(init)
 data = []
 data_2 = []
 
+start = timer()
+
 for i in range(5000):
     cvalues = sess.run([optimiser, cost_function], feed_dict={x: training_input, y_: training_output})
 
     if i % 100:
         print(cvalues[1])
+
+end = timer()
+
+print("Time taken to train: {}".format(end-start))
 
 correct = 0
 
